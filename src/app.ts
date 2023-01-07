@@ -1,6 +1,6 @@
 import express, { Application } from 'express'
 import routerHealth from './helpers/health'
-import routerUser from './modules/user/http/router'
+import routerUser from './modules/user/interfaces/http/router'
 import HandlerErrors from './helpers/errors'
 
 class App {
