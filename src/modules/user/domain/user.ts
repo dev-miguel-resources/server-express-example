@@ -1,3 +1,5 @@
+import { IEntity } from 'src/modules/shared/entity.interface'
+
 // INTERFACES
 interface UserRequired {
   id: number
@@ -22,8 +24,8 @@ type UserUpdate = {
 
 export type UserProperties = Required<UserRequired> & Partial<UserOptional>
 
-// MODELO DE DOMINIO
-export default class User {
+// MODEL DOMAIN
+export default class User implements IEntity<UserProperties, UserUpdate> {
   private readonly id: number
   private name: string
   private lastname: string
