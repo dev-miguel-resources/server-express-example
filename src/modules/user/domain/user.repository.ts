@@ -1,9 +1,10 @@
 import User from './user'
 
 export interface UserRepository {
-  list(): User[]
-  listOne(id: number): User
-  insert(user: User): void
-  update(user: User): void
-  delete(user: User): void
+   // design pattern: facade: https://refactoring.guru/design-patterns/facade
+   list(): User[]
+   listOne(id: number): User
+   insert(user: User): User
+   update(user: User): User
+   delete(user: User): User
 }
