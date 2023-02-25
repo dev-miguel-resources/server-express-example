@@ -6,7 +6,11 @@ export default class {
    constructor(private application: UserApplication) {
       // design pattern: links of methods or mediator: https://refactoring.guru/design-patterns/mediator
       // forma 1
-      //this.list = this.list.bind(this);
+      this.list = this.list.bind(this);
+      this.listOne = this.listOne.bind(this)
+      this.insert = this.insert.bind(this)
+      this.update = this.update.bind(this)
+      this.delete = this.delete.bind(this)
    }
 
    list(req: Request, res: Response) {
@@ -15,13 +19,12 @@ export default class {
    }
 
    listOne(req: Request, res: Response) {
-      const user = this.application.listOne(1)
-      res.json(user)
+      //const user = this.application.listOne(guid)
+      //res.json(user)
    }
 
    insert(req: Request, res: Response) {
       const properties: UserProperties = {
-         id: 1,
          name: 'Jesus',
          lastname: 'Rico',
          email: 'jrico@gmail.com',
@@ -36,7 +39,6 @@ export default class {
 
    update(req: Request, res: Response) {
       const properties: UserProperties = {
-         id: 1,
          name: 'Jesus',
          lastname: 'Gonzalez',
          email: 'jrico@gmail.com',
@@ -51,7 +53,6 @@ export default class {
 
    delete(req: Request, res: Response) {
       const properties: UserProperties = {
-         id: 1,
          name: 'Jesus',
          lastname: 'Gonzalez',
          email: 'jrico@gmail.com',
@@ -60,7 +61,7 @@ export default class {
       }
 
       const user: User = new User(properties)
-      const userDelete = this.application.delete(user)
-      res.json(userDelete)
+      //const userDelete = this.application.delete(user)
+      //res.json(userDelete)
    }
 }
