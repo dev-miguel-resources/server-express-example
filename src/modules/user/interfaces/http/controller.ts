@@ -1,16 +1,21 @@
 import User, { UserProperties } from './../../domain/user'
 import { Request, Response } from 'express'
 import UserApplication from '../../application/user.application'
+import UserFactory from '../../domain/user-factory'
+import { EmailVO } from '../../domain/value-objects/email.vo'
+import { UserInsertMapping } from './dto/response/user-insert.dto'
+import { UserListOneMapping } from './dto/response/user-list-one.dto'
+import { UserListDTO } from './dto/response/user-list.dto'
 
 export default class {
    constructor(private application: UserApplication) {
       // design pattern: links of methods or mediator: https://refactoring.guru/design-patterns/mediator
       // forma 1
-      this.list = this.list.bind(this);
+      this.list = this.list.bind(this)
       this.listOne = this.listOne.bind(this)
-      this.insert = this.insert.bind(this)
-      this.update = this.update.bind(this)
-      this.delete = this.delete.bind(this)
+      //this.insert = this.insert.bind(this)
+      //this.update = this.update.bind(this)
+      //this.delete = this.delete.bind(this)
    }
 
    list(req: Request, res: Response) {
@@ -23,7 +28,7 @@ export default class {
       //res.json(user)
    }
 
-   insert(req: Request, res: Response) {
+   /*insert(req: Request, res: Response) {
       const properties: UserProperties = {
          name: 'Jesus',
          lastname: 'Rico',
@@ -63,5 +68,5 @@ export default class {
       const user: User = new User(properties)
       //const userDelete = this.application.delete(user)
       //res.json(userDelete)
-   }
+   }*/
 }

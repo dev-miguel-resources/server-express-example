@@ -5,5 +5,5 @@ export interface UserRepository {
    list(): UserProperties[]
    listOne(guid: string): User
    insert(user: User): UserProperties
-   update(user: User): UserProperties
+   update(user: User): User
 }

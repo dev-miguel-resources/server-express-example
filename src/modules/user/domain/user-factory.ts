@@ -1,16 +1,15 @@
 import { v4 as uuidv4 } from 'uuid'
 import { UserPasswordService } from './services/user-password.service'
 import User, { UserProperties } from './user'
-//import { EmailVO } from './value-objects/email.vo'
+import { EmailVO } from './value-objects/email.vo'
 
-// design pattern factory: https://refactoring.guru/design-patterns/abstract-factory
+// design pattern abstract factory y method factory: https://refactoring.guru/design-patterns/abstract-factory
 export default class UserFactory {
 
    async create (
       name: string,
       lastname: string,
-      //email: EmailVO,
-      email: string,
+      email: EmailVO,
       password: string,
    ) {
 
