@@ -10,7 +10,7 @@ interface UserDTO {
 
 export type UserListDTO = UserDTO[]
 
-export class UserListOneMapping extends DTO<UserProperties[], UserListDTO> {
+export class UserListMapping extends DTO<UserProperties[], UserListDTO> {
   execute(data: UserProperties[]): UserListDTO {
     return data.map((user: UserProperties) => {
       return {

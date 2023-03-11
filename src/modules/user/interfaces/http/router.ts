@@ -20,9 +20,9 @@ class UserRouter {
       // design pattern chain of responsability (middlewares): https://refactoring.guru/design-patterns/chain-of-responsibility
       this.expressRouter.get('/', controller.list)
       this.expressRouter.get('/:guid', controller.listOne)
-      //this.expressRouter.post('/', controller.insert)
-      //this.expressRouter.put('/:guid', controller.update)
-      //this.expressRouter.delete('/:guid', controller.delete)
+      this.expressRouter.post('/', controller.insert)
+      this.expressRouter.put('/:guid', controller.update)
+      this.expressRouter.delete('/:guid', controller.delete)
       // forma 2
       /*this.expressRouter.get('/list', (req: Request, res: Response) => {
          controller.list(req, res)
