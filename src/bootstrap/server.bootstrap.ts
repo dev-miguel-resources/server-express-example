@@ -1,9 +1,6 @@
 import http from 'http'
 import { Application } from 'express'
-
-export abstract class Bootstrap {
-   abstract initialize(): Promise<string | Error>
-}
+import { Bootstrap } from './base.bootstrap'
 
 export default class extends Bootstrap {
    constructor(private readonly app: Application) {
