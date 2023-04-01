@@ -1,9 +1,9 @@
-import User, { UserProperties } from './user'
+import User from './user'
 
 export interface UserRepository {
    // design pattern: facade: https://refactoring.guru/design-patterns/facade
-   list(): UserProperties[]
-   listOne(guid: string): User
-   insert(user: User): UserProperties
-   update(user: User): User
+   //list(): Promise<User[]>
+   //listOne(guid: string): Promise<User>
+   insert(user: User): Promise<User>
+   //update(user: User): Promise<User>
 }

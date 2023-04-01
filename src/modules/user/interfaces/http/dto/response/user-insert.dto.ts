@@ -10,7 +10,7 @@ interface UserDTO {
 
 export type UserInsertOneDTO = UserDTO
 
-export class UserInsertMapping extends DTO<UserProperties, UserDTO> {
+export class UserInsertMapping extends DTO<UserProperties, UserInsertOneDTO> {
   execute(data: UserProperties): UserInsertOneDTO {
     return {
       name: data.name,

@@ -9,9 +9,9 @@ class RouterHealth {
    }
 
    mountRoutes() {
-      this.expressRouter.get('/', (req: Request, res: Response) => res.send('All is ok'))
-      this.expressRouter.get('/healthcheck', (req: Request, res: Response) => res.send('All is ok'))
-      this.expressRouter.get('/healthz', (req: Request, res: Response) => res.send('All is ok'))
+      this.expressRouter.get('/', (_req: Request, res: Response) => res.send('All is ok'))
+      this.expressRouter.get('/healthcheck', (_req: Request, res: Response) => res.send('All is ok'))
+      this.expressRouter.get('/healthz', (_req: Request, res: Response) => res.send('All is ok'))
    }
 }
 

@@ -8,13 +8,12 @@ export default class extends Bootstrap {
    }
 
    initialize() {
-      return new Promise<string | Error>((resolve, reject) => {
+      return new Promise<string | Error>((_resolve, reject) => {
          const server = http.createServer(this.app)
 
          server
             .listen(3000)
             .on('listening', () => {
-               resolve('Promise resolve successfully')
                console.log('listening on port 3000')
             })
             .on('error', error => {
