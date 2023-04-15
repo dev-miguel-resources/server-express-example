@@ -23,7 +23,6 @@ type UserUpdate = {
 
 export type UserProperties = Required<UserRequired> & Partial<UserOptional>
 
-// DATA MODEL
 export default class User implements IEntity<UserProperties, UserUpdate> {
   private name: string
   private lastname: string

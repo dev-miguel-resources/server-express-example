@@ -20,7 +20,7 @@ export default class UserInfraestructure implements UserRepository {
       guid,
       name,
       lastname,
-      email: email,
+      email: email.value,
       password,
       refreshToken,
       active,
