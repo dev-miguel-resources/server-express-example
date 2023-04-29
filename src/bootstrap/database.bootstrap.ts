@@ -13,7 +13,7 @@ export default class extends Bootstrap {
       port: 3310,
       username: 'user',
       password: '12345',
-      database: 'cursonode',
+      database: 'bddcursonode',
       synchronize: true,
       logging: true,
       entities: [UserEntity],

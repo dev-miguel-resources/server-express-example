@@ -4,33 +4,46 @@ import UserFactory from '../../domain/user-factory'
 import { EmailVO } from '../../domain/value-objects/email.vo'
 import { UserInsertMapping } from './dto/response/user-insert.dto'
 import { IError } from '../helper/ierror'
-//import { UserListOneMapping } from './dto/response/user-list-one.dto'
-//import { UserListMapping } from './dto/response/user-list.dto'
-//import { UserListDTO } from './dto/response/user-list.dto'
+import { UserListMapping } from './dto/response/user-list.dto'
+import { GuidVO } from '../../domain/value-objects/guid.vo'
+import { UserListOneMapping } from './dto/response/user-list-one.dto'
+import { UserUpdateMapping } from './dto/response/user-update.dto'
 
 export default class {
   constructor(private application: UserApplication) {
     // design pattern: links of methods or mediator: https://refactoring.guru/design-patterns/mediator
     // forma 1
-    //this.list = this.list.bind(this)
-    //this.listOne = this.listOne.bind(this)
+    this.list = this.list.bind(this)
+    this.listOne = this.listOne.bind(this)
     this.insert = this.insert.bind(this)
-    //this.update = this.update.bind(this)
+    this.update = this.update.bind(this)
     //this.delete = this.delete.bind(this)
   }
 
-  /*list(_req: Request, res: Response) {
-    const list = this.application.list()
-    const result: UserListDTO = new UserListMapping().execute(list)
+  async list(_req: Request, res: Response) {
+    const list = await this.application.list()
+    const result = new UserListMapping().execute(list.map(user => user.properties()))
     res.json(result)
   }
 
-  listOne(req: Request, res: Response) {
+  async listOne(req: Request, res: Response, next: NextFunction) {
     const { guid } = req.params
-    const data = this.application.listOne(guid).properties()
-    const result = new UserListOneMapping().execute(data)
-    res.json(result)
-  }*/
+
+    const guidResult = GuidVO.create(guid)
+    if (guidResult.isErr()) {
+      const err: IError = new Error(guidResult.error.message)
+      err.status = 411
+      return next(err)
+    }
+
+    const userResult = await this.application.listOne(guid)
+    if (userResult.isErr()) {
+      return res.status(400).send(userResult.error.message)
+    } else if (userResult.isOk()) {
+      const result = new UserListOneMapping().execute(userResult.value.properties())
+      return res.json(result)
+    }
+  }
 
   async insert(req: Request, res: Response, next: NextFunction) {
     const { name, lastname, email, password } = req.body
@@ -53,16 +66,28 @@ export default class {
     }
   }
 
-  /*update(req: Request, res: Response) {
+  async update(req: Request, res: Response, next: NextFunction) {
     const { guid } = req.params
-    const { name, lastname, email, password } = req.body
-    const user = this.application.listOne(guid)
-    user.update({ name, lastname, email: EmailVO.create(email), password })
-    const result = this.application.update(user)
-    res.json(result)
+    const fieldsToUpdate = req.body
+
+    const guidResult = GuidVO.create(guid)
+    if (guidResult.isErr()) {
+      const err: IError = new Error(guidResult.error.message)
+      err.status = 411
+      return next(err)
+    }
+    const dataResult = await this.application.update(guid, fieldsToUpdate)
+    if (dataResult.isErr()) {
+      const err: IError = new Error(dataResult.error.message)
+      err.status = 411
+      return next(err)
+    } else {
+      const result = new UserUpdateMapping().execute(dataResult.value.properties())
+      res.json(result)
+    }
   }
 
-  delete(req: Request, res: Response) {
+  /*delete(req: Request, res: Response) {
     const { guid } = req.params
     const user = this.application.listOne(guid)
     user.delete()
