@@ -20,4 +20,8 @@ export default class UserApplication {
   update(guid: string, user: Partial<UserUpdate>) {
     return this.userRepository.update(guid, user)
   }
+
+  delete(guid: string) {
+   return this.userRepository.delete(guid)
+  }
 }

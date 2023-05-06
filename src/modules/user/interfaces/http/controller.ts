@@ -8,6 +8,7 @@ import { UserListMapping } from './dto/response/user-list.dto'
 import { GuidVO } from '../../domain/value-objects/guid.vo'
 import { UserListOneMapping } from './dto/response/user-list-one.dto'
 import { UserUpdateMapping } from './dto/response/user-update.dto'
+import { UserDeleteMapping } from './dto/response/user-delete.dto'
 
 export default class {
   constructor(private application: UserApplication) {
@@ -17,7 +18,7 @@ export default class {
     this.listOne = this.listOne.bind(this)
     this.insert = this.insert.bind(this)
     this.update = this.update.bind(this)
-    //this.delete = this.delete.bind(this)
+    this.delete = this.delete.bind(this)
   }
 
   async list(_req: Request, res: Response) {
@@ -87,11 +88,24 @@ export default class {
     }
   }
 
-  /*delete(req: Request, res: Response) {
+  async delete(req: Request, res: Response, next: NextFunction) {
     const { guid } = req.params
-    const user = this.application.listOne(guid)
-    user.delete()
-    const result = this.application.update(user)
-    res.json(result)
-  }*/
+
+    const guidResult = GuidVO.create(guid)
+    if (guidResult.isErr()) {
+      const err: IError = new Error(guidResult.error.message)
+      err.status = 411
+      return next(err)
+    }
+
+    const dataResult = await this.application.delete(guid)
+    if (dataResult.isErr()) {
+      const err: IError = new Error(dataResult.error.message)
+      err.status = 404
+      return next(err)
+    } else {
+      const result = new UserDeleteMapping().execute(dataResult.value.properties())
+      res.json(result)
+    }
+  }
 }

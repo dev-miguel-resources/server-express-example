@@ -18,7 +18,7 @@ export default class UserInfraestructure implements UserRepository {
     return result.map((el: UserEntity) => {
       const emailResult = EmailVO.create(el.email)
       if (emailResult.isErr()) {
-        throw new UserEmailInvalidException() // mejora
+        throw new UserEmailInvalidException()
       }
 
       return new User({
@@ -90,6 +90,37 @@ export default class UserInfraestructure implements UserRepository {
 
       if (emailResult.isErr()) {
         return err(new UserEmailRequiredException())
+      }
+
+      return ok(
+        new User({
+          guid: userEntity.guid,
+          name: userEntity.name,
+          lastname: userEntity.lastname,
+          email: emailResult.value,
+          password: userEntity.password,
+          refreshToken: userEntity.refreshToken,
+          active: userEntity.active,
+        }),
+      )
+    } else {
+      return err(new UserNotFoundException())
+    }
+  }
+
+  async delete(guid: string): Promise<Result<User, UserNotFoundException | UserEmailInvalidException>> {
+    const repo = DatabaseBootstrap.dataSource.getRepository(UserEntity)
+
+    const userFound = await repo.findOne({
+      where: { guid },
+    })
+    if (userFound) {
+      userFound.active = false
+      const userEntity = await repo.save(userFound)
+      const emailResult = EmailVO.create(userEntity.email)
+
+      if (emailResult.isErr()) {
+        return err(new UserEmailInvalidException())
       }
 
       return ok(

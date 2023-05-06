@@ -3,6 +3,7 @@ import UserApplication from '../../application/user.application'
 import { UserRepository } from '../../domain/user.repository'
 import UserInfraestructure from '../../infraestructure/user.infraestructure'
 import UserController from './controller'
+import { MiddlewareListOne } from './middlewares/user.middleware'
 
 const infraestructure: UserRepository = new UserInfraestructure()
 const application = new UserApplication(infraestructure)
@@ -17,12 +18,13 @@ class UserRouter {
    }
 
    mountRoutes() {
+
       // design pattern chain of responsability (middlewares): https://refactoring.guru/design-patterns/chain-of-responsibility
       this.expressRouter.get('/', controller.list)
-      this.expressRouter.get('/:guid', controller.listOne) // pendiente
+      this.expressRouter.get('/:guid', ...MiddlewareListOne, controller.listOne)
       this.expressRouter.post('/', controller.insert)
       this.expressRouter.put('/:guid', controller.update)
-      //this.expressRouter.delete('/:guid', controller.delete)
+      this.expressRouter.delete('/:guid', controller.delete)
       // forma 2
       /*this.expressRouter.get('/list', (req: Request, res: Response) => {
          controller.list(req, res)
