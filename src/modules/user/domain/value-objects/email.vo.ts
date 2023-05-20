@@ -1,12 +1,8 @@
 import { ValueObject } from './vo.class'
 import { UserEmailInvalidException } from '../exceptions/user.exception'
-import { err, ok, Result } from 'neverthrow'
-
-interface EmailProps {
-   value: string
-}
-
-export type EmailResult = Result<EmailVO, UserEmailInvalidException>
+import { err, ok } from 'neverthrow'
+import { EmailProps } from './interfaces/emailProps.interface'
+import { EmailResult } from './types/emailResult.type'
 
 export class EmailVO extends ValueObject<EmailProps> {
    private constructor(props: EmailProps) {

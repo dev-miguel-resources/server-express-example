@@ -5,5 +5,3 @@ export abstract class ValueObject<Props> {
       this.props = Object.freeze(props)
    }
 }
-
-

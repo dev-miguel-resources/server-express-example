@@ -1,13 +1,9 @@
 import { validate as uuidValidate } from 'uuid'
 import { ValueObject } from './vo.class'
 import { UserGuidInvalidException } from '../exceptions/user.exception'
-import { err, ok, Result } from 'neverthrow'
-
-interface GuidProps {
-   value: string
-}
-
-type GuidResult = Result<GuidVO, UserGuidInvalidException>
+import { err, ok } from 'neverthrow'
+import { GuidProps } from './interfaces/guidProps.interface'
+import { GuidResult } from './types/guidResult.type'
 
 export class GuidVO extends ValueObject<GuidProps> {
    private constructor(props: GuidProps) {

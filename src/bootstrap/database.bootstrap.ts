@@ -1,32 +1,25 @@
 import { Bootstrap } from './base.bootstrap'
 import { DataSource } from 'typeorm'
-import { UserEntity } from '../modules/user/infraestructure/user.entity'
+import { AppService } from './services/app.service'
+import { DB_CONFIG } from './interfaces/dbConfig.interface'
 
 let appDataSource: DataSource
 
 export default class extends Bootstrap {
-
    initialize(): Promise<DataSource> {
-    const AppDataSource = new DataSource({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3310,
-      username: 'user',
-      password: '12345',
-      database: 'bddcursonode',
-      synchronize: true,
-      logging: true,
-      entities: [UserEntity],
-      migrations: [],
-      subscribers: [],
-    })
+      const dbConfig: DB_CONFIG = AppService.DBConfig
 
-    appDataSource = AppDataSource
+      const AppDataSource = new DataSource({
+         type: 'mysql',
+         ...dbConfig,
+      })
 
-    return AppDataSource.initialize()
-  }
+      appDataSource = AppDataSource
 
-  static get dataSource(): DataSource {
-   return appDataSource
-  }
+      return AppDataSource.initialize()
+   }
+
+   static get dataSource(): DataSource {
+      return appDataSource
+   }
 }
