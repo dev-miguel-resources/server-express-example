@@ -14,6 +14,7 @@ class UserMiddleware {
       if (errors.length > 0) {
          console.log(errors)
          return next(new Error('Invalid request'))
+         // return res.status(400).json({ error: 'Invalid request' })
       }
 
       next()
