@@ -1,4 +1,7 @@
 # Directory Deployment
+# node-api-saturday (image)
+# api-node-saturday (container)
+#docker run -d --name api-node-saturday -p 3000:3000 -e DB_HOST=mysqlserver -e DB_PORT=3306 --network net-saturday node-api-saturday
 FROM node:alpine3.16 AS DEPLOYMENT
 
 # Habilitar desde la terminal de la imagen, la factibilidad de descargas procesos desde una ruta remota
@@ -42,6 +45,6 @@ COPY --from=DEPLOYMENT /build/node_modules ./node_modules
 
 COPY --from=DEPLOYMENT /build/package.json ./package.json
 
-COPY --from=DEPLOYMENT /build/dist /dist
+COPY --from=DEPLOYMENT /build/dist ./dist
 
 CMD ["yarn", "run", "prod"]
