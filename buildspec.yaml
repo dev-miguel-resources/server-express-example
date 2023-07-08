@@ -7,7 +7,7 @@ phases:
          - echo Logging into AWS ECR # mensaje del proceso para el acceso a ECR AWS
          - aws --version # identificación de la versión de aws
          - REPOSITORY_URI=619467781629.dkr.ecr.us-east-2.amazonaws.com/cursonodesaturday # identificador del path de la imagen el repo del ECR
-         - aws ecr get-login-password | docker login --username AWS --pasword-stdin ${REPOSITORY_URI} # acá me autentico de cara al ECR
+         - aws ecr get-login-password | docker login --username AWS --password-stdin ${REPOSITORY_URI} # acá me autentico de cara al ECR
          - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # imprime el commit en le flujo de CI/CD y le agrega un identificador de proceso
          - IMAGE_TAG=$(COMMIT_HASH:=lastest) # cual es el tag que le queremos dar a la imagen
 
