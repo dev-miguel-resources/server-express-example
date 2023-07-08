@@ -2,7 +2,7 @@
 # node-api-saturday (image)
 # api-node-saturday (container)
 #docker run -d --name api-node-saturday -p 3000:3000 -e DB_HOST=mysqlserver -e DB_PORT=3306 --network net-saturday node-api-saturday
-FROM node:alpine3.16 AS DEPLOYMENT
+FROM node:16-alpine AS DEPLOYMENT
 
 # Habilitar desde la terminal de la imagen, la factibilidad de descargas procesos desde una ruta remota
 RUN apk add curl bash --no-cache
@@ -35,7 +35,7 @@ RUN yarn install --production
 RUN /usr/local/bin/node-prune
 
 # Directory Production
-FROM node:alpine3.16
+FROM node:16-alpine
 
 # Directorio de la imagen
 WORKDIR /app
