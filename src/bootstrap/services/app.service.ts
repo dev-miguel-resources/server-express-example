@@ -10,14 +10,14 @@ export class AppService {
    }
 
    static get DBConfig() {
-      const pass = env.DB_PASS.toString()
+      //const pass = env.DB_PASS.toString();
       return {
          host: env.DB_HOST || 'localhost',
          port: +env.DB_PORT || 3310,
          entities: [UserEntity],
          //entities: [process.env.DB_ENTITIES || 'dist/**/*.entity.js'],
          username: env.DB_USER || 'user',
-         password: pass || '12345',
+         password: env.DB_PASS || '12345',
          database: env.DB_NAME || 'bddcursonode',
          synchronize: env.DB_SYNC || false,
          logging: env.DB_LOGG || false,
