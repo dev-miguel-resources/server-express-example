@@ -9,7 +9,7 @@ phases:
          - REPOSITORY_URI=619467781629.dkr.ecr.us-east-2.amazonaws.com/cursonodesaturday # identificador del path de la imagen el repo del ECR
          - aws ecr get-login-password | docker login --username AWS --password-stdin ${REPOSITORY_URI} # acá me autentico de cara al ECR
          - COMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # imprime el commit en le flujo de CI/CD y le agrega un identificador de proceso
-         - IMAGE_TAG=$(COMIT_HASH:=lastest) # cual es el tag que le queremos dar a la imagen
+         - IMAGE_TAG=${COMIT_HASH:=lastest} # cual es el tag que le queremos dar a la imagen
 
    build:
       commands:
