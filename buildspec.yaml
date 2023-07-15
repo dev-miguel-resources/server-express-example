@@ -6,7 +6,7 @@ phases:
       commands:
          - echo Logging into AWS ECR # mensaje del proceso para el acceso a ECR AWS
          - aws --version # identificación de la versión de aws
-         - REPOSITORY_URI=619467781629.dkr.ecr.us-east-2.amazonaws.com/saturdaynode # identificador del path de la imagen el repo del ECR
+         - REPOSITORY_URI=619467781629.dkr.ecr.us-east-2.amazonaws.com/repo-img # identificador del path de la imagen el repo del ECR
          - aws ecr get-login-password | docker login --username AWS --password-stdin ${REPOSITORY_URI} # acá me autentico de cara al ECR
          - COMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # imprime el commit en le flujo de CI/CD y le agrega un identificador de proceso
          - IMAGE_TAG=${COMIT_HASH:=lastest} # cual es el tag que le queremos dar a la imagen
@@ -15,7 +15,7 @@ phases:
       commands:
          - echo Build started on `date` # aquí ocupamos la función de fecha del code build
          - echo Building the docker image # mensaje de construcción de la imagen de docker
-         - aws s3 cp s3://mybucketsaturday/prd-saturday/.env .env
+         #- aws s3 cp s3://mybucketsaturday/prd-saturday/.env .env
          - docker build -t $REPOSITORY_URI:latest . # construcción de la imagen mediante el Dockerfile
          - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG # creo una copia de la imagen a partir de la actual como respaldo
 
