@@ -1,6 +1,4 @@
 # Directory Deployment
-# node-api-saturday (image)
-# api-node-saturday (container)
 #docker run -d --name api-node-saturday -p 3000:3000 -e DB_HOST=mysqlserver -e DB_PORT=3306 --network net-saturday node-api-saturday
 FROM node:16-alpine AS DEPLOYMENT
 
@@ -47,6 +45,6 @@ COPY --from=DEPLOYMENT /build/package.json ./package.json
 
 COPY --from=DEPLOYMENT /build/dist ./dist
 
-#COPY --from=DEPLOYMENT /build/.env ./.env
+COPY --from=DEPLOYMENT /build/.env ./.env
 
 CMD ["yarn", "run", "prod"]
